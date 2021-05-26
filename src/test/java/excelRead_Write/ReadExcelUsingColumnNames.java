@@ -4,11 +4,17 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class ReadExcelUsingColumnNames {
 
@@ -53,6 +59,15 @@ public class ReadExcelUsingColumnNames {
 		 * System.out.println("My Cell value is : " + my_cell_value); } }
 		 */
 		
+
+			/* Open the Login Page */
+		
+		WebDriverManager.chromedriver().setup();
+		WebDriver driver=new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
+		driver.get("http://demowebshop.tricentis.com/login");
+		
+		
 		// Storing Values in to Variables ( In this case, Usernames and Passwords )
 		
 		XSSFRow row=null;
@@ -78,8 +93,38 @@ public class ReadExcelUsingColumnNames {
 				}
 				
 			}
-			System.out.println("User Name : " + userName + " ---- > " + "Password : "  + password);
+			//System.out.println("User Name : " + userName + " ---- > " + "Password : "  + password);
 			// We can pass this values in to web application for testing Test user Accounts.
+			
+			driver.findElement(By.id("Email")).sendKeys(userName);
+			driver.findElement(By.id("Password")).sendKeys(password);
+			driver.findElement(By.xpath("//*[@value='Log in']")).click();
+			
+			String result=null;
+			try 
+			{
+				Boolean isLoggedin=driver.findElement(By.xpath("//a[text()='Log out']")).isDisplayed();		
+				if(isLoggedin==true)
+				{
+					result="PASS";
+				}
+				System.out.println("User Name : " + userName + " ---- > " + "Password : "  + password + "-----> Login Success ? "+ result);
+				driver.findElement(By.xpath("//a[text()='Log out']")).click();
+			}
+			catch(Exception e)
+			{
+				Boolean isError=driver.findElement(By.xpath("//*[text()='The credentials provided are incorrect']")).isDisplayed();
+				if(isError==true)
+				{
+					result="FAIL";
+				}
+				System.out.println("User Name : " + userName + " ---- > " + "Password : "  + password + "-----> Login Success ? "+ result);
+				
+			}
+			
+			driver.findElement(By.xpath("//*[text()='Log in']")).click();
+			
+			
 		}
 		
 		
