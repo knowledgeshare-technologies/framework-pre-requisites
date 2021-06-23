@@ -16,7 +16,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class ReadExcelUserLoginTest {
+public class WriteExcelUserLoginTest {
 
 	public static void main(String[] args) throws IOException, InterruptedException 
 	{
@@ -62,6 +62,9 @@ public class ReadExcelUserLoginTest {
 				{
 					result="PASS";
 					// Writing to an excel
+					cell=row.createCell(2);
+					cell.setCellType(cell.CELL_TYPE_STRING);
+					cell.setCellValue(result);
 					
 					
 				}
@@ -76,13 +79,18 @@ public class ReadExcelUserLoginTest {
 				if(isError==true)
 				{
 					result="FAIL";
-					
+					cell=row.createCell(2);
+					cell.setCellType(cell.CELL_TYPE_STRING);
+					cell.setCellValue(result);
 				}
 				System.out.println("User Name : " + userName + " ---- > " + "Password : "  + password + "-----> Login success ? ------> " + result);
 			}
 			Thread.sleep(1000);
 			driver.findElement(By.xpath("//a[text()='Log in']")).click();
 		}
+		FileOutputStream fos=new FileOutputStream(file);
+		wb.write(fos);
+		fos.close();
 		
 	}
 
