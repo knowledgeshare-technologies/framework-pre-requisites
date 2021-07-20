@@ -1,0 +1,30 @@
+<Project>
+<WEB>
+		<dev>
+			<application_url>www.devmywebapp.com</application_url>
+		</dev>	
+		<qa>
+			<application_url>www.qamywebapp.com</application_url>
+		</qa>
+		<stage>
+			<application_url>www.stagemywebapp.com</application_url>
+		</stage>
+		<prod>
+			<application_url>www.prodmywebapp.com</application_url>
+		</prod>
+</WEB>
+<DB>
+		<dev>
+		<DB_Conn_String>Server=devmyServerName\myInstanceName;Database=myDataBase;User Id=myUsername;Password=myPassword;</DB_Conn_String>
+		</dev>	
+		<qa>
+		<DB_Conn_String>Server=qamyServerName\myInstanceName;Database=myDataBase;User Id=myUsername;Password=myPassword;</DB_Conn_String>
+		</qa>
+		<stage>
+		<DB_Conn_String>Server=stgmyServerName\myInstanceName;Database=myDataBase;User Id=myUsername;Password=myPassword;</DB_Conn_String>
+		</stage>
+		<prod>
+		<DB_Conn_String>Server=prodmyServerName\myInstanceName;Database=myDataBase;User Id=myUsername;Password=myPassword;</DB_Conn_String>
+		</prod>
+</DB>
+</Project>
